@@ -1,0 +1,14 @@
+{
+  "name": "imageopt",
+  "version": "1.0.0",
+  "description": "optimize image",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "@Isrealsix",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^27.0.0"
+  }
+}
