@@ -1,11 +1,13 @@
 const { app, BrowserWindow} = require('electron')
 
+let mainWindow
 function createMainWindow () {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     title: 'Image optimizer',
-    width: 500,
-    height: 500
+    width: 1280,
+    height: 800
   })
+  mainWindow.loadURL('./app/index.html')
 }
 
 app.on('ready', createMainWindow)
