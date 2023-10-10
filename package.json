@@ -4,7 +4,7 @@
   "description": "optimize image",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "dev": "electron ."
   },
   "author": "@Isrealsix",
   "license": "MIT",
