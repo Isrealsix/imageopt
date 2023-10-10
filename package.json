@@ -4,11 +4,14 @@
   "description": "optimize image",
   "main": "main.js",
   "scripts": {
-    "dev": "electron ."
+    "start": "electron .",
+    "dev": "nodemon --exec electron ."
   },
   "author": "@Isrealsix",
   "license": "MIT",
   "dependencies": {
-    "electron": "^27.0.0"
+    "electron": "^27.0.0",
+    "nodemon": "^3.0.1"
+
   }
 }
