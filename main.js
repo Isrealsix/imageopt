@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu} = require('electron')
+const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
 
 // Set env
 process.env.NODE_ENV = 'development'
@@ -12,7 +12,8 @@ function createMainWindow () {
     width: 1280,
     height: 800,
     icon: './asswts/icons/Icon_256x256.png',
-    resizable: isDev ? true : false
+    resizable: isDev ? true : false,
+    backgroundColor: 'white'
   })
   mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 }
@@ -26,19 +27,6 @@ app.on('activate', () => {
 })
 
 
-const menu = [
-  ...(isMac ? [{role: 'appMenu'}] : []),
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'Quit',
-        click: () => app.quit()
-      }
-    ]
-  }
-]
-
 // if (isMac) {
 //   menu.unshift({ role: 'appMenu' })
 // }
@@ -46,5 +34,22 @@ app.on('ready', () => {
   createMainWindow()
   const mainMenu = Menu.buildFromTemplate(menu);
   Menu.setApplicationMenu(mainMenu)
+
+  globalShortcut.register('CmdOrCtrl+R', () => mainWindow.reload())
+  globalShortcut.register(isMac ? 'Command+Alt+I' : 'Ctrl+Shift+I', () => mainWindow.toggleDevTools())
   mainWindow.on('ready', () => mainWindow = null)
 })
+
+const menu = [
+  ...(isMac ? [{role: 'appMenu'}] : []),
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Quit',
+        accelerator: 'CmdOrCtrl+W',
+        click: () => app.quit()
+      }
+    ]
+  }
+]
