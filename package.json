@@ -14,7 +14,6 @@
   "author": "@Isrealsix",
   "license": "MIT",
   "dependencies": {
-    "electron": "^27.0.0",
     "electron-log": "^4.4.8",
     "imagemin": "^7.0.1",
     "imagemin-mozjpeg": "^8.0.0",
@@ -22,6 +21,7 @@
     "slash": "^3.0.0"
   },
   "devDependencies": {
+    "electron": "^27.0.0",
     "electron-packager": "^17.1.2",
     "nodemon": "^3.0.1"
   }
