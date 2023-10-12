@@ -3,7 +3,7 @@ const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
 // Set env
 process.env.NODE_ENV = 'development'
 
-const isDev = process.env === 'development' ? true : false
+const isDev = process.env.NODE_ENV === 'development' ? true : false
 const isMac = process.platform === 'darwin' ? true : false
 let mainWindow;
 let aboutWindow;
@@ -44,17 +44,6 @@ app.on('activate', () => {
 //   menu.unshift({ role: 'appMenu' })
 // }
 const menu = [
-  ...(isDev? [
-    {
-      label: 'Developer',
-      submenu: [
-        { role: 'reload'},
-        { role: 'forcereload'},
-        { type: 'separator'},
-        { role: 'toggledevtools'}
-      ]
-    }
-  ] : []),
   ...(isMac ? [{
     role: app.name,
     submenu: [
@@ -65,19 +54,28 @@ const menu = [
     ]
   }] : []),
   ...(!isMac ? [
+      {
+          label: 'Help',
+          submenu: [
+              {
+                  label: 'About',
+                  click: createAboutWindow
+                }
+              ]
+            }
+          ] : []),
+  { role: 'fileMenu' },
+  ...(isDev ? [
     {
-      label: 'Help',
+      label: 'Developer',
       submenu: [
-        {
-          label: 'About',
-          click: createAboutWindow
-        }
+        { role: 'reload'},
+        { role: 'forcereload'},
+        { type: 'separator'},
+        { role: 'toggledevtools'}
       ]
     }
-  ] : []),
-  {
-    role: 'fileMenu'
-  }
+  ] : [])
 ]
 app.on('ready', () => {
   createMainWindow()
