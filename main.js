@@ -5,17 +5,30 @@ process.env.NODE_ENV = 'development'
 
 const isDev = process.env === 'development' ? true : false
 const isMac = process.platform === 'darwin' ? true : false
-let mainWindow
+let mainWindow;
+let aboutWindow;
 function createMainWindow () {
   mainWindow = new BrowserWindow({
     title: 'Image optimizer',
     width: 1280,
     height: 800,
     icon: './asswts/icons/Icon_256x256.png',
-    resizable: isDev ? true : false,
+    resizable: false,
     backgroundColor: 'white'
   })
   mainWindow.loadURL(`file://${__dirname}/app/index.html`)
+}
+
+function createAboutWindow () {
+  aboutWindow = new BrowserWindow({
+    title: 'About Imageoptimizer',
+    width: 300,
+    height: 300,
+    icon: './asswts/icons/Icon_256x256.png',
+    resizable: isDev ? true : false,
+    backgroundColor: 'white'
+  })
+  aboutWindow.loadURL(`file://${__dirname}/app/about.html`)
 }
 
 app.on('window-all-closed', () => {
@@ -30,21 +43,7 @@ app.on('activate', () => {
 // if (isMac) {
 //   menu.unshift({ role: 'appMenu' })
 // }
-app.on('ready', () => {
-  createMainWindow()
-  const mainMenu = Menu.buildFromTemplate(menu);
-  Menu.setApplicationMenu(mainMenu)
-
-  globalShortcut.register('CmdOrCtrl+R', () => mainWindow.reload())
-  globalShortcut.register(isMac ? 'Command+Alt+I' : 'Ctrl+Shift+I', () => mainWindow.toggleDevTools())
-  mainWindow.on('ready', () => mainWindow = null)
-})
-
 const menu = [
-  ...(isMac ? [{role: 'appMenu'}] : []),
-  {
-    role: 'fileMenu'
-  },
   ...(isDev? [
     {
       label: 'Developer',
@@ -55,15 +54,37 @@ const menu = [
         { role: 'toggledevtools'}
       ]
     }
-  ] : [])
-  // {
-  //   label: 'File',
-  //   submenu: [
-  //     {
-  //       label: 'Quit',
-  //       accelerator: 'CmdOrCtrl+W',
-  //       click: () => app.quit()
-  //     }
-  //   ]
-  // }
+  ] : []),
+  ...(isMac ? [{
+    role: app.name,
+    submenu: [
+      {
+        label: 'About',
+        click: createAboutWindow
+      }
+    ]
+  }] : []),
+  ...(!isMac ? [
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About',
+          click: createAboutWindow
+        }
+      ]
+    }
+  ] : []),
+  {
+    role: 'fileMenu'
+  }
 ]
+app.on('ready', () => {
+  createMainWindow()
+  const mainMenu = Menu.buildFromTemplate(menu);
+  Menu.setApplicationMenu(mainMenu)
+
+  globalShortcut.register('CmdOrCtrl+R', () => mainWindow.reload())
+  globalShortcut.register(isMac ? 'Command+Alt+I' : 'Ctrl+Shift+I', () => mainWindow.toggleDevTools())
+  mainWindow.on('ready', () => mainWindow = null)
+})
