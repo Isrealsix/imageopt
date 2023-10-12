@@ -13,9 +13,14 @@ function createMainWindow () {
     width: 1280,
     height: 800,
     icon: './asswts/icons/Icon_256x256.png',
-    resizable: false,
-    backgroundColor: 'white'
+    resizable: isDev ? true : false,
+    backgroundColor: 'white',
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
   })
+  if (isDev) mainWindow.webContents.openDevTools();
   mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 }
 
