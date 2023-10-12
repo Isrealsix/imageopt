@@ -21,5 +21,10 @@ form.addEventListener('submit', (ev) => {
     quality
   })
 
-  console.log({imgPath, quality});
+  // on done
+  ipcRenderer.on('image:done', () => {
+    M.toast({
+      html: `Image resized to ${slider.value}% quality`
+    })
+  })
 })
