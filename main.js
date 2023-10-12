@@ -3,9 +3,9 @@ const os = require('os')
 const imagemin = require('imagemin')
 const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 
-// const imageminMozjpeg = require('imagemin-mozjpeg')
-// const imageminPngquant = require('imagemin-pngquant')
-// const slash = require('slash')
+const imageminMozjpeg = require('imagemin-mozjpeg')
+const imageminPngquant = require('imagemin-pngquant')
+const slash = require('slash')
 // Set env
 process.env.NODE_ENV = 'development'
 
@@ -60,7 +60,7 @@ async function shrinkImage({ imgPath, quality, dest}) {
       ]
     })
     console.log(files);
-    // shell.openPath(dest)
+    shell.openPath(dest)
   } catch (err) {
     console.log(err);
   }
